@@ -138,7 +138,7 @@ void loop()
     int heaterLevel = min( 1, max( 0, heaterPower ) ) * MAX_HEATER_RATE;
     analogWrite( heaterPin, heaterLevel );
     if ( stage < STAGE_ERROR ) {
-      analogWrite( ledPin, map( heaterLevel, 0, MAX_HEATER_RATE, 0, 255 ) );
+      digitalWrite( ledPin, heaterLevel > 1 ? HIGH : LOW );
     }
 
     // Read temperature
