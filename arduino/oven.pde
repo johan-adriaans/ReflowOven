@@ -7,9 +7,19 @@
 #define MODE_NORMAL 1    // Normal operation
 #define MODE_CALIBRATE 2 // Calibration mode, blink led and listen for pushbutton
 
-// Heat profile
-#define SOAK_TEMPERATURE 180   // At which temperature shall we start soaking?
-#define TARGET_TEMPERATURE 250 // Target temperature..
+// Heat profiles
+// Loodvrij soldeer
+//#define SOAK_TEMPERATURE 180   // At which temperature shall we start soaking?
+//#define TARGET_TEMPERATURE 250 // Target temperature..
+
+// Loodhoudende soldeer
+//#define SOAK_TEMPERATURE 140
+//#define TARGET_TEMPERATURE 220
+
+// Laagsmeltpunt soldeer
+#define SOAK_TEMPERATURE 110
+#define TARGET_TEMPERATURE 160
+
 #define MAX_HEAT_OFFSET 20     // Area around target heat used for calculating heater power
 #define MAX_HEATER_RATE 200    // Max PWM rate for heaterPin
 
