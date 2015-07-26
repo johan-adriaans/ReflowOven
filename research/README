@@ -1,0 +1,5 @@
+Start emulator with:
+php emulate.php | tee plot.dat
+
+Start live gnuplot with:
+gnuplot -p -e "plot 'plot.dat'" loop.plt
