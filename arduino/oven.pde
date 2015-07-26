@@ -126,7 +126,7 @@ void loop()
 
     // Beep a few times
     static int beeps;
-    if ( stage == STAGE_FINISHED && beeps < 3 ) {
+    if ( stage == STAGE_FINISHED && beeps < 6 ) {
       static bool beep;
       beep = !beep;
       digitalWrite( buzzerPin, beep ? HIGH : LOW );
