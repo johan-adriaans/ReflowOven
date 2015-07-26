@@ -1,8 +1,8 @@
-#define STAGE_INITIAL 1  // Heat up to 0.75
-#define STAGE_SOAK 2     // Soak at 0.75 for 45 seconds
+#define STAGE_INITIAL 1  // Heat up to ~0.75 of target temp
+#define STAGE_SOAK 2     // Soak at ~0.75 of temp for TIME_TO_SOAK seconds
 #define STAGE_END 3      // Heat up to 1
 #define STAGE_FINISHED 4 // Shut down heat and play buzzer
-#define STAGE_ERROR 5    // Shut down heat and play buzzer
+#define STAGE_ERROR 255  // Shut down heat and stop
 
 #define MODE_NORMAL 1    // Normal operation
 #define MODE_CALIBRATE 2 // Calibration mode, blink led and listen for pushbutton
@@ -22,6 +22,9 @@
 
 #define MAX_HEAT_OFFSET 20     // Area around target heat used for calculating heater power
 #define MAX_HEATER_RATE 200    // Max PWM rate for heaterPin
+
+#define TIME_TO_SOAK 45.0 // Seconds to soak (Needs to be a float)
+#define TIME_BEFORE_SOAK 90.0 // Try to reach SOAK_TEMPERATURE in TIME_BEFORE_SOAK seconds
 
 // Pinout
 int pushbuttonPin = 2;
@@ -68,8 +71,6 @@ int readTemperature ()
   // 380 ≈ 25°C and 765 ≈ 200°C
   int adc = analogRead( sensorInputPin );
 
-  //Serial.print(adc);
-  //Serial.print(": ");
   static int avg = 0;
   if ( avg == 0 ) {
     avg = adc;
@@ -105,16 +106,16 @@ void loop()
       stage = STAGE_SOAK;
     }
 
-    targetTemperature = (seconds / 90.0) * SOAK_TEMPERATURE;
+    targetTemperature = (seconds / TIME_BEFORE_SOAK) * SOAK_TEMPERATURE;
     heaterPower = (targetTemperature - temperature) / MAX_HEAT_OFFSET;
   } else if ( stage == STAGE_SOAK ) {
     soakTime = seconds - soakTimeStart;
-    if ( soakTime >= 45 ) {
+    if ( soakTime >= TIME_TO_SOAK ) {
       Serial.println( "##### END STAGE #####" );
       stage = STAGE_END;
     }
 
-    targetTemperature = SOAK_TEMPERATURE + ((soakTime / 45.0) * 10);
+    targetTemperature = SOAK_TEMPERATURE + ((soakTime / TIME_TO_SOAK) * 10);
     heaterPower = ( targetTemperature - temperature ) / MAX_HEAT_OFFSET;
   } else if ( stage == STAGE_END ) {
     heaterPower = 1;
