@@ -7,8 +7,9 @@
 #define MODE_NORMAL 1    // Normal operation
 #define MODE_CALIBRATE 2 // Calibration mode, blink led and listen for pushbutton
 
-#define SOAK_TEMPERATURE 125   // At which temperature shall we start soaking?
-#define TARGET_TEMPERATURE 200 // Target temperature..
+// Heat profile
+#define SOAK_TEMPERATURE 180   // At which temperature shall we start soaking?
+#define TARGET_TEMPERATURE 250 // Target temperature..
 #define MAX_HEAT_OFFSET 20     // Area around target heat used for calculating heater power
 #define MAX_HEATER_RATE 200    // Max PWM rate for heaterPin
 
@@ -109,7 +110,7 @@ void loop()
     heaterPower = 1;
   }
 
-  if ( temperature >= TARGET_TEMPERATURE && stage != STAGE_FINISHED ) {
+  if ( temperature >= TARGET_TEMPERATURE && stage < STAGE_FINISHED ) {
     Serial.println( "##### FINISHED #####" );
     heaterPower = 0;
     stage = STAGE_FINISHED;
@@ -123,16 +124,22 @@ void loop()
       heaterPower = 0; // Turn heater off!
     }
 
-    // Start beeping
-    if ( stage == STAGE_FINISHED ) {
-      static int beep;
-      beep != beep;
+    // Beep a few times
+    static int beeps;
+    if ( stage == STAGE_FINISHED && beeps < 3 ) {
+      static bool beep;
+      beep = !beep;
       digitalWrite( buzzerPin, beep ? HIGH : LOW );
+      Serial.println( "Beep..." );
+      beeps++;
     }
 
     // Apply heat
     int heaterLevel = min( 1, max( 0, heaterPower ) ) * MAX_HEATER_RATE;
     analogWrite( heaterPin, heaterLevel );
+    if ( stage < STAGE_ERROR ) {
+      analogWrite( ledPin, map( heaterLevel, 0, MAX_HEATER_RATE, 0, 255 ) );
+    }
 
     // Read temperature
     temperature = readTemperature();
