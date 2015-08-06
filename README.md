@@ -42,7 +42,7 @@ De sensor in de groene schroefklemmen, heater in de blauwe:
 
 ![](images/DSC_5143.jpg)
 
-Draden blank maken, liefst strippen en vertinnen, dan goed vastscrhoeven.
+Draden blank maken, liefst strippen en vertinnen, dan goed vastschroeven.
 
 ### Stap 6: software
 
