@@ -56,8 +56,8 @@ De groene LED is altijd aan als de interne 5V regelaar stroom krijgt.
 
 ### Stap 7
 
-Controleren, controleren, controleren. En dan: _nog een laatste keertje..._
-Als bijvoorbeeld de zener verkeerd om zit, krijg je gegarandeerd vuurwerk.
+Controleren, controleren, controleren. En dan: _nog een laatste keertje..._  
+Als bijvoorbeeld de zener verkeerd om zit, krijg je gegarandeerd vuurwerk.  
 Pas als je zeker weet dat de zaak klopt, de 19V adapter inprikken.
 
 Als alles goed aangesloten en ingesteld is, begint het plaatje warm te worden.  
