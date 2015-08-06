@@ -1,6 +1,8 @@
 # ReflowOven
 Arduino reflow oven voor de BEEA avond, 6 augustus 2015
 
+De "bill-of-materials" staat [hier](board-v1/bill-of-materials.pdf).
+
 
 ## Opbouw reflow printje
 
